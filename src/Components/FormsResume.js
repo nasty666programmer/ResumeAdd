@@ -4,6 +4,9 @@ import axios from 'axios';
 import validator from 'validator';
 import {connect} from 'react-redux';
 import {addResume} from './redux/reducers/action';
+import Button from '@material-ui/core/Button';
+import {Container} from '@material-ui/core/'
+
 
 function FormsResume(props) {
     const [forms,setForms] = useState({
@@ -100,7 +103,7 @@ const validPhone = () => {
                 <hr /> 
                 <input type='text' name='phone' value={forms.phone} placeholder='enter youur phone' onChange={handleChange}/>
                 <hr /> 
-                <button >Add Resume</button>
+                <Button variant='contained' color='primary'>Add Resume</Button>
             </form>
 
             

@@ -1,5 +1,5 @@
 import {ADD_RESUME, DELETE_RESUME, EDIT_RESUME} from './types';
-import axios from 'axios'
+
 
 export const addResume = resume => {
     return {

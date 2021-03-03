@@ -5,7 +5,7 @@ import ListResume from './Panel/ListResume';
 function Main(props) {
     return (
         <Router>
-        <div>
+        <div style={{marginRight:'50%',marginTop:'30%'}}>
             <button onClick={props.LogOut}>Exit</button>
             <nav>
                 <Link to='/allResume'><span>Show all resume</span></Link>
