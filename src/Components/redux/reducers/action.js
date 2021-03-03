@@ -1,4 +1,4 @@
-import {ADD_RESUME, DEFAULT_RESUME, DELETE_RESUME} from './types';
+import {ADD_RESUME, DELETE_RESUME, EDIT_RESUME} from './types';
 import axios from 'axios'
 
 export const addResume = resume => {
@@ -8,14 +8,12 @@ export const addResume = resume => {
     }
 }
 
-/*export function defaultResume() {
-    return async dispatch => {
-        let res = await fetch('https://5f34067b9124200016e185b4.mockapi.io/resume')
-        let result = await res.json();
-        dispatch({type:ADD_RESUME,payload:result})
-        
+export const editResume = edit_resume => {
+    return {
+        type:EDIT_RESUME,
+        payload:edit_resume
     }
-}*/
+}
 
 export const deleteResume = id => {
     return {

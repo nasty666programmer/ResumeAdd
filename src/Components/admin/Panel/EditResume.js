@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
-
+import {connect} from 'react-redux';
+import {editResume} from '../../redux/reducers/action';
 
 function EditResume(props) {
     const {firstName,lastName,job,phone,email,country,id} = props;
@@ -23,12 +24,18 @@ function EditResume(props) {
         })
     }
 
+    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.put('https://5f34067b9124200016e185b4.mockapi.io/resume/' + id,{...forms})
-        .then(res => console.log(res))
+        .then(res => {
+                axios.get('https://5f34067b9124200016e185b4.mockapi.io/resume/')
+                .then(res => props.editResume(res.data))
+                .catch(err => console.log(err))
+        })
         .catch(err => console.log(err))
-       // setForms({...forms})
+       
         
     }
 
@@ -66,5 +73,9 @@ function EditResume(props) {
 }
 
 
+const mapDispatchToProps = {
+    editResume
+}
 
-export default EditResume;
+
+export default connect(null,mapDispatchToProps)(EditResume);
