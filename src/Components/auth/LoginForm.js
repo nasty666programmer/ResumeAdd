@@ -6,17 +6,14 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow:1
+      flexGrow:1,
+      
+      height:'350px'
     },
     menuButton: {
-      marginLeft:theme.spacing(15),
       marginTop:theme.spacing(3)
     },
-    title: {
-      marginRight:theme.spacing(15)
-    },
     forms: {
-        marginLeft:theme.spacing(65),
         marginTop:theme.spacing(25)
     },
     textField: {
@@ -44,16 +41,16 @@ function LoginForm(props) {
         props.logInfo(userForm)
     }
 
-   
+    
 
     return (
         <div className={classes.forms}>
-            <form onSubmit={handleSubmit} className={classes.root} noValidate >
+            <form onSubmit={handleSubmit} className={classes.root} noValidate align='center'>
                 <TextField className={classes.textField} id="standard-basic" label="Login" onChange={handleChange} value={userForm.login} placeholder='enter your login' type='text' name='login'/>
                 <br/>
                 <TextField className={classes.textField} d="standard-basic" label="Password" onChange={handleChange} value={userForm.password} placeholder='enter your password' type='password' name='password'  />
                 <br/>
-                <Button className={classes.menuButton} color='primary' type='submit' variant='contained'>Log In</Button>
+                <Button align='center' className={classes.menuButton} color='primary' type='submit' variant='contained'>Log In</Button>
             </form>
         </div>
     )

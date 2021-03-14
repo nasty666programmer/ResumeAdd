@@ -6,14 +6,17 @@ import {addResume} from './Components/redux/reducers/action';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import { useEffect} from 'react';
-import {Container,Toolbar,AppBar,Typography,Box,Dialog, DialogContent, DialogContentText,DialogActions,DialogTitle} from '@material-ui/core';
+import {Container,Toolbar,AppBar,Typography,Box,Dialog, DialogContent, DialogContentText,DialogActions,DialogTitle, BottomNavigation} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles'
 import {useState} from 'react';
+import { spacing } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow:1
+    flexGrow:1,
+   
+    
   },
   menuButton: {
     marginRight:theme.spacing(5)
@@ -21,6 +24,19 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginRight:theme.spacing(15)
   },
+  main: {
+    paddingBottom: '1px',
+    position:'relative'
+  },
+  footer: {
+    backgroundColor:'blue',
+    width:'100%',
+    height:'10rem',
+    position: 'fixed',
+    left: '0',
+    bottom: '-1rem',
+    
+  }
 
 }))
 
@@ -32,7 +48,7 @@ function App(props) {
   useEffect(() => {
     if(props.data.length == 0 ) {
     axios.get('https://5f34067b9124200016e185b4.mockapi.io/resume')
-    .then(res => props.addResume(res.data))
+    .then(res => props.addResume(res.data)).then(res => console.log(res.data))
     .catch(err => console.log(err))
     }
   },[])
@@ -60,7 +76,7 @@ function App(props) {
           </Container>
       </AppBar>
        
-          <Switch>
+          <Switch className={classes.main}>
             <Route path='/' exact>
               <FormsResume />
             </Route>
@@ -68,6 +84,14 @@ function App(props) {
               <Login/>
             </Route>
           </Switch>
+
+          <footer className={classes.footer}>
+            <BottomNavigation>
+              
+
+            </BottomNavigation>
+            <Typography align='center' gutterBottom></Typography>
+          </footer>
     </Router>
   );
 }

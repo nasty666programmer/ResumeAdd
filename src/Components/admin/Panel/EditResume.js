@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import {editResume} from '../../redux/reducers/action';
 
 function EditResume(props) {
-    const {firstName,lastName,job,phone,email,country,id} = props;
+    const {id,fio,about,age,phone,email,img} = props;
     const [forms,setForms] = useState({
         id,
-        firstName,
-        lastName,
-        country,
-        job,
+        fio,
+        about,
+        age,
+        img,
         email,
         phone
     });

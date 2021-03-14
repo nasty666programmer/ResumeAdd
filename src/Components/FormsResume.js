@@ -5,16 +5,40 @@ import validator from 'validator';
 import {connect} from 'react-redux';
 import {addResume} from './redux/reducers/action';
 import Button from '@material-ui/core/Button';
-import {Container} from '@material-ui/core/'
+import {Container,Toolbar,AppBar,Typography,Box,Dialog, DialogContent, DialogContentText,DialogActions,DialogTitle,TextField} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles'
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow:1
+    },
+    menuButton: {
+      marginLeft:theme.spacing(20),
+      marginTop:theme.spacing(3)
+    },
+    forms: {
+        marginLeft:theme.spacing(65),
+        marginTop:theme.spacing(25)
+    },
+    textField: {
+        width: '29.375rem',
+        textAlign:'center',
+        marginTop:theme.spacing(2)
+    }
+  }))
 
 
 function FormsResume(props) {
+    let classes = useStyles();
+    const [images,setImages] = useState('')
+
     const [forms,setForms] = useState({
         id:Date.now(),
-        firstName:'',
-        lastName:'',
-        country:'',
-        job:'',
+        fio:'',
+        age:'',
+        img:'',
+        about:'',
         email:'',
         phone:''
     })
@@ -38,7 +62,7 @@ function FormsResume(props) {
     }
 
     const validData = () => {
-        if(!isEmpty(forms.firstName) && !isEmpty(forms.firstName) && !isEmpty(forms.firstName) && !isEmpty(forms.country) && !isEmpty(forms.job)) {            
+        if(!isEmpty(forms.fio) && !isEmpty(forms.phone) && !isEmpty(forms.about) && !isEmpty(forms.age)) {            
             return true
         }
     }
@@ -56,6 +80,24 @@ const validPhone = () => {
     }
 }
 
+
+
+const handleFileChange =  e => {
+   
+    let file = e.target.files[0];
+     let blob = new Blob([file],{type: 'image/jpeg'})
+        let reader = new FileReader();
+        reader.readAsDataURL(blob); // конвертирует Blob в base64 и вызывает onload
+
+        reader.onload = function() {
+            
+            setForms({...forms, img:reader.result})
+        };
+        console.log(images)
+    
+    
+}
+console.log(forms)
     const handleSubmit = (e) => {
         e.preventDefault();
        
@@ -65,7 +107,7 @@ const validPhone = () => {
                 .then(props.addResume({...forms}))
                 .then(setTimeout(() =>
                 window.location.reload()
-                ,3000))
+                ,2500))
                 .catch(err => console.log(err))
                 
                 flag = true;
@@ -76,37 +118,38 @@ const validPhone = () => {
             flag = false
         }
         setForms({
-            firstName:'',
-            lastName:'',
-            country:'',
-            job:'',
+            fio:'',
+            age:'',
+            img:'',
+            about:'',
             email:'',
             phone:''
         })
        
     }
-
         
     return (
         <div>
             <h1>Resume</h1>
-            <form onSubmit={handleSubmit}>
-                <input type='text' name='firstName' value={forms.firstName} placeholder='enter your name' onChange={handleChange}/>
-                <hr /> 
-                <input type='text' name='lastName' value={forms.lastName} placeholder='enter your last name' onChange={handleChange}/>
-                <hr />
-                <input type='text' name='country' value={forms.country} placeholder='enter your country' onChange={handleChange}/>
-                <hr /> 
-                <input type='text' name='job' value={forms.job} placeholder='enter your job' onChange={handleChange}/>
-                <hr /> 
-                <input type='text' name='email' value={forms.email} placeholder='enter your email' onChange={handleChange}/>
-                <hr /> 
-                <input type='text' name='phone' value={forms.phone} placeholder='enter youur phone' onChange={handleChange}/>
-                <hr /> 
-                <Button variant='contained' color='primary'>Add Resume</Button>
+            <form onSubmit={handleSubmit} align='center'>
+                <br />
+                <TextField  size='small' variant='outlined' className={classes.textField} id="standard-basic" label="ФИО"  type='text' name='fio' value={forms.fio}  onChange={handleChange}/>
+                <br />
+                <TextField  size='small' variant='outlined' className={classes.textField} id="standard-basic" label="Email"  type='text' name='email' value={forms.email}  onChange={handleChange}/>
+                <br />
+                <TextField  size='small' variant='outlined' className={classes.textField} id="standard-basic" label="Телефон"  type='text' name='phone' value={forms.phone}  onChange={handleChange}/>
+                <br />
+                <TextField  size='small' variant='outlined' className={classes.textField} id="standard-basic" label="Возраст"  type='text' name='age' value={forms.age}  onChange={handleChange}/>
+                <br />
+                <TextField  size='small' variant='outlined' className={classes.textField} id="standard-basic" label="О себе"  type='text' name='about' value={forms.about}  onChange={handleChange}/>
+                <br />
+                <TextField  size='small' variant='outlined' className={classes.textField} id="standard-basic"  type='file' name='img'  onChange={handleFileChange}/>
+                <br />
+                <br />
+                <Button type='submit' variant='contained'  color='primary'>Add Resume</Button>
             </form>
 
-            
+        
         </div>
     )
 }
